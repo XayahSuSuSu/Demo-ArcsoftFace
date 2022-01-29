@@ -17,6 +17,7 @@ add_executable(arcsoft_face_engine_test
         ./inc/arcsoft_face_sdk.h
 		./inc/asvloffscreen.h
 		./inc/merror.h
+		./inc/key.h
 		./samplecode.cpp)
 
 #-fPIC	在给定的作用域内设置一个命名的属性

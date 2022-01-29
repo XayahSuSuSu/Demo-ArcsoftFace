@@ -8,12 +8,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "key.h"
 
 using namespace std;
-
-//从开发者中心获取APPID/SDKKEY(以下均为假数据，请替换)
-#define APPID "D617np8jyKt1jN9gMr7ENbTJ1XvRWsQAsvdAehMKvqzr"
-#define SDKKEY "BTeyKLCYBzfrNLQduGUwfyRZkDQU4RB2b3UJZjjuppLU"
 
 #define NSCALE 16
 #define FACENUM    5
