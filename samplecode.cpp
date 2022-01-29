@@ -68,35 +68,35 @@ int ColorSpaceConversion(MInt32 width, MInt32 height, MInt32 format, MUInt8 *img
 
 
 int main() {
-    printf("\n************* ArcFace SDK Info *****************\n");
+    printf("\n************* ArcFace SDK 信息 *****************\n");
     MRESULT res = MOK;
     ASF_ActiveFileInfo activeFileInfo = {nullptr};
     res = ASFGetActiveFileInfo(&activeFileInfo);
     if (res != MOK) {
-        printf("ASFGetActiveFileInfo fail: %ld\n", res);
+        printf("ASFGetActiveFileInfo 失败: %ld\n", res);
     } else {
         //这里仅获取了有效期时间，还需要其他信息直接打印即可
         char startDateTime[32];
         timestampToTime(activeFileInfo.startTime, startDateTime, 32);
-        printf("startTime: %s\n", startDateTime);
+        printf("Key有效期起始时间: %s\n", startDateTime);
         char endDateTime[32];
         timestampToTime(activeFileInfo.endTime, endDateTime, 32);
-        printf("endTime: %s\n", endDateTime);
+        printf("Key有效期终止时间: %s\n", endDateTime);
     }
 
     //SDK版本信息
     const ASF_VERSION version = ASFGetVersion();
-    printf("\nVersion:%s\n", version.Version);
-    printf("BuildDate:%s\n", version.BuildDate);
-    printf("CopyRight:%s\n", version.CopyRight);
+    printf("\n版本:%s\n", version.Version);
+    printf("编译日期:%s\n", version.BuildDate);
+    printf("版权:%s\n", version.CopyRight);
 
-    printf("\n************* Face Recognition *****************\n");
+    printf("\n************* 人脸识别信息 *****************\n");
 
     res = ASFOnlineActivation(APPID, SDKKEY);
     if (MOK != res && MERR_ASF_ALREADY_ACTIVATED != res)
-        printf("ASFOnlineActivation fail: %ld\n", res);
+        printf("ASFOnlineActivation 失败: %ld\n", res);
     else
-        printf("ASFOnlineActivation sucess: %ld\n", res);
+        printf("ASFOnlineActivation 成功: %ld\n", res);
 
     //初始化引擎
     MHandle handle = nullptr;
@@ -104,9 +104,9 @@ int main() {
                   ASF_IR_LIVENESS;
     res = ASFInitEngine(ASF_DETECT_MODE_IMAGE, ASF_OP_0_ONLY, NSCALE, FACENUM, mask, &handle);
     if (res != MOK)
-        printf("ASFInitEngine fail: %ld\n", res);
+        printf("ASFInitEngine 失败: %ld\n", res);
     else
-        printf("ASFInitEngine sucess: %ld\n", res);
+        printf("ASFInitEngine 成功: %ld\n", res);
 
     /*********以下三张图片均存在，图片保存在 ./bulid/images/ 文件夹下*********/
 
@@ -153,7 +153,7 @@ int main() {
 
         res = ASFDetectFacesEx(handle, &offscreen1, &detectedFaces1);;
         if (res != MOK && detectedFaces1.faceNum > 0) {
-            printf("%s ASFDetectFaces 1 fail: %ld\n", picPath1, res);
+            printf("%s ASFDetectFaces 1 失败: %ld\n", picPath1, res);
         } else {
             SingleDetectedFaces.faceRect.left = detectedFaces1.faceRect[0].left;
             SingleDetectedFaces.faceRect.top = detectedFaces1.faceRect[0].top;
@@ -164,7 +164,7 @@ int main() {
             // 单人脸特征提取
             res = ASFFaceFeatureExtractEx(handle, &offscreen1, &SingleDetectedFaces, &feature1);
             if (res != MOK) {
-                printf("%s ASFFaceFeatureExtractEx 1 fail: %ld\n", picPath1, res);
+                printf("%s ASFFaceFeatureExtractEx 1 失败: %ld\n", picPath1, res);
             } else {
                 //拷贝feature，否则第二次进行特征提取，会覆盖第一次特征提取的数据，导致比对的结果为1
                 copyfeature1.featureSize = feature1.featureSize;
@@ -183,7 +183,7 @@ int main() {
 
         res = ASFDetectFacesEx(handle, &offscreen2, &detectedFaces2);
         if (res != MOK && detectedFaces2.faceNum > 0) {
-            printf("%s ASFDetectFacesEx 2 fail: %ld\n", picPath2, res);
+            printf("%s ASFDetectFacesEx 2 失败: %ld\n", picPath2, res);
         } else {
             SingleDetectedFaces.faceRect.left = detectedFaces2.faceRect[0].left;
             SingleDetectedFaces.faceRect.top = detectedFaces2.faceRect[0].top;
@@ -193,28 +193,28 @@ int main() {
 
             res = ASFFaceFeatureExtractEx(handle, &offscreen2, &SingleDetectedFaces, &feature2);
             if (res != MOK)
-                printf("%s ASFFaceFeatureExtractEx 2 fail: %ld\n", picPath2, res);
+                printf("%s ASFFaceFeatureExtractEx 2 失败: %ld\n", picPath2, res);
             else
-                printf("%s ASFFaceFeatureExtractEx 2 sucess: %ld\n", picPath2, res);
+                printf("%s ASFFaceFeatureExtractEx 2 成功: %ld\n", picPath2, res);
         }
 
         // 单人脸特征比对
         MFloat confidenceLevel;
         res = ASFFaceFeatureCompare(handle, &copyfeature1, &feature2, &confidenceLevel);
         if (res != MOK)
-            printf("ASFFaceFeatureCompare fail: %ld\n", res);
+            printf("ASFFaceFeatureCompare 失败: %ld\n", res);
         else
-            printf("ASFFaceFeatureCompare sucess: %lf\n", confidenceLevel);
+            printf("ASFFaceFeatureCompare 成功: %lf\n", confidenceLevel);
 
 
-        printf("\n************* Face Process *****************\n");
+        printf("\n************* 人脸识别进程 *****************\n");
         //设置活体置信度 SDK内部默认值为 IR：0.7  RGB：0.5（无特殊需要，可以不设置）
         ASF_LivenessThreshold threshold = {0};
         threshold.thresholdmodel_BGR = 0.5;
         threshold.thresholdmodel_IR = 0.7;
         res = ASFSetLivenessParam(handle, &threshold);
         if (res != MOK)
-            printf("ASFSetLivenessParam fail: %ld\n", res);
+            printf("ASFSetLivenessParam 失败: %ld\n", res);
         else
             printf("RGB Threshold: %f\nIR Threshold: %f\n", threshold.thresholdmodel_BGR, threshold.thresholdmodel_IR);
 
@@ -222,45 +222,45 @@ int main() {
         MInt32 processMask = ASF_AGE | ASF_GENDER | ASF_FACE3DANGLE | ASF_LIVENESS;
         res = ASFProcessEx(handle, &offscreen2, &detectedFaces2, processMask);
         if (res != MOK)
-            printf("ASFProcessEx fail: %ld\n", res);
+            printf("ASFProcessEx 失败: %ld\n", res);
         else
-            printf("ASFProcessEx sucess: %ld\n", res);
+            printf("ASFProcessEx 成功: %ld\n", res);
 
         // 获取年龄
         ASF_AgeInfo ageInfo = {nullptr};
         res = ASFGetAge(handle, &ageInfo);
         if (res != MOK)
-            printf("%s ASFGetAge fail: %ld\n", picPath2, res);
+            printf("%s ASFGetAge 失败: %ld\n", picPath2, res);
         else
-            printf("%s First face age: %d\n", picPath2, ageInfo.ageArray[0]);
+            printf("%s 第一次人脸识别 年龄: %d\n", picPath2, ageInfo.ageArray[0]);
 
         // 获取性别
         ASF_GenderInfo genderInfo = {nullptr};
         res = ASFGetGender(handle, &genderInfo);
         if (res != MOK)
-            printf("%s ASFGetGender fail: %ld\n", picPath2, res);
+            printf("%s ASFGetGender 失败: %ld\n", picPath2, res);
         else
-            printf("%s First face gender: %d\n", picPath2, genderInfo.genderArray[0]);
+            printf("%s 第一次人脸识别 性别: %d\n", picPath2, genderInfo.genderArray[0]);
 
         // 获取3D角度
         ASF_Face3DAngle angleInfo = {nullptr};
         res = ASFGetFace3DAngle(handle, &angleInfo);
         if (res != MOK)
-            printf("%s ASFGetFace3DAngle fail: %ld\n", picPath2, res);
+            printf("%s ASFGetFace3DAngle 失败: %ld\n", picPath2, res);
         else
-            printf("%s First face 3dAngle: roll: %lf yaw: %lf pitch: %lf\n", picPath2, angleInfo.roll[0],
+            printf("%s 第一次人脸识别 3D角度: roll: %lf yaw: %lf pitch: %lf\n", picPath2, angleInfo.roll[0],
                    angleInfo.yaw[0], angleInfo.pitch[0]);
 
         //获取活体信息
         ASF_LivenessInfo rgbLivenessInfo = {nullptr};
         res = ASFGetLivenessScore(handle, &rgbLivenessInfo);
         if (res != MOK)
-            printf("ASFGetLivenessScore fail: %ld\n", res);
+            printf("ASFGetLivenessScore 失败: %ld\n", res);
         else
-            printf("ASFGetLivenessScore sucess: %d\n", rgbLivenessInfo.isLive[0]);
+            printf("ASFGetLivenessScore 成功: %d\n", rgbLivenessInfo.isLive[0]);
 
 
-        printf("\n**********IR LIVENESS*************\n");
+        printf("\n**********IR 活体检测*************\n");
 
         //第二张人脸
         ASVLOFFSCREEN offscreen3 = {0};
@@ -269,25 +269,25 @@ int main() {
         ASF_MultiFaceInfo detectedFaces3 = {nullptr};
         res = ASFDetectFacesEx(handle, &offscreen3, &detectedFaces3);
         if (res != MOK)
-            printf("ASFDetectFacesEx fail: %ld\n", res);
+            printf("ASFDetectFacesEx 失败: %ld\n", res);
         else
-            printf("Face num: %d\n", detectedFaces3.faceNum);
+            printf("人脸数量: %d\n", detectedFaces3.faceNum);
 
         //IR图像活体检测
         MInt32 processIRMask = ASF_IR_LIVENESS;
         res = ASFProcessEx_IR(handle, &offscreen3, &detectedFaces3, processIRMask);
         if (res != MOK)
-            printf("ASFProcessEx_IR fail: %ld\n", res);
+            printf("ASFProcessEx_IR 失败: %ld\n", res);
         else
-            printf("ASFProcessEx_IR sucess: %ld\n", res);
+            printf("ASFProcessEx_IR 成功: %ld\n", res);
 
         //获取IR活体信息
         ASF_LivenessInfo irLivenessInfo = {nullptr};
         res = ASFGetLivenessScore_IR(handle, &irLivenessInfo);
         if (res != MOK)
-            printf("ASFGetLivenessScore_IR fail: %ld\n", res);
+            printf("ASFGetLivenessScore_IR 失败: %ld\n", res);
         else
-            printf("IR Liveness: %d\n", irLivenessInfo.isLive[0]);
+            printf("IR 活体检测: %d\n", irLivenessInfo.isLive[0]);
 
         //释放内存
         SafeFree(copyfeature1.feature);
@@ -299,11 +299,11 @@ int main() {
         //反初始化
         res = ASFUninitEngine(handle);
         if (res != MOK)
-            printf("ASFUninitEngine fail: %ld\n", res);
+            printf("ASFUninitEngine 失败: %ld\n", res);
         else
-            printf("ASFUninitEngine sucess: %ld\n", res);
+            printf("ASFUninitEngine 成功: %ld\n", res);
     } else {
-        printf("No pictures found.\n");
+        printf("未发现图片.\n");
     }
 
     getchar();
