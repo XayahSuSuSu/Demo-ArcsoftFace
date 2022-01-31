@@ -1,10 +1,11 @@
 import cv2
-from  pyarcsoftface.engine import *
+
+from pyarcsoftface.engine import *
 
 APPID = b''
 SDKKey = b''
 
-#激活接口,首次需联网激活
+# 激活接口,首次需联网激活
 res = ASFOnlineActivation(APPID, SDKKey)
 if (MOK != res and MERR_ASF_ALREADY_ACTIVATED != res):
     print("ASFActivation fail: {}".format(res))
