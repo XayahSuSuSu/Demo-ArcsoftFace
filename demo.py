@@ -1,5 +1,5 @@
 import cv2
-from  arcface.engine import *
+from  pyarcsoftface.engine import *
 
 APPID = b''
 SDKKey = b''
