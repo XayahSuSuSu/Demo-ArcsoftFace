@@ -1,3 +1,5 @@
+import datetime
+
 import cv2
 
 from pyarcsoftface.engine import *
@@ -18,7 +20,17 @@ res, activeFileInfo = ASFGetActiveFileInfo()
 if res != MOK:
     print("获取激活文件信息失败！代码: {}".format(res))
 else:
-    print("激活文件信息: {}".format(activeFileInfo))
+    print("############################################################")
+    print("有效时间：{} - {}".format(
+        datetime.datetime.fromtimestamp(int(activeFileInfo.startTime)).strftime("%Y-%m-%d %H:%M:%S"),
+        datetime.datetime.fromtimestamp(int(activeFileInfo.endTime)).strftime("%Y-%m-%d %H:%M:%S")))
+    print("平台：{}".format(activeFileInfo.platform))
+    print("Sdk类型：{}".format(activeFileInfo.sdkType))
+    print("AppId：{}".format(activeFileInfo.appId))
+    print("SdkKey：{}".format(activeFileInfo.sdkKey))
+    print("Sdk版本：{}".format(activeFileInfo.sdkVersion))
+    print("文件版本：{}".format(activeFileInfo.fileVersion))
+    print("############################################################")
 
 # 获取人脸识别引擎
 face_engine = ArcFace()
