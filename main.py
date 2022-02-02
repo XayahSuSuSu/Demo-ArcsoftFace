@@ -1,9 +1,7 @@
 import cv2
 
+from Key import APPID, SDKKey
 from pyarcsoftface.engine import *
-
-APPID = b''
-SDKKey = b''
 
 # 联网激活
 res = ASFOnlineActivation(APPID, SDKKey)

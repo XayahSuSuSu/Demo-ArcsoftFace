@@ -1,0 +1,2 @@
+APPID = b''
+SDKKey = b''
