@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 
+import db
 from router import router
 
 app = Flask(__name__)
@@ -12,6 +13,9 @@ app.config['JSON_AS_ASCII'] = False
 CORS(app, supports_credentials=True)
 
 app.register_blueprint(router, url_prefix="/")
+
+# 初始化MySQL数据库
+db.init()
 
 if __name__ == '__main__':
     app.run()
