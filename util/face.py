@@ -58,7 +58,14 @@ def getFaceFeature(picture):
     return face_feature
 
 
-def getComparison(face_engine, face_feature1, face_feature2):
+def getComparison(face_feature1, face_feature2):
     """返回相似度"""
-    res, score = face_engine.ASFFaceFeatureCompare(face_feature1, face_feature2)
+    activate()
+    face_engine = initEngine()
+    feature1 = ASF_FaceFeature()
+    feature1.set_feature(face_feature1)
+    feature2 = ASF_FaceFeature()
+    feature2.set_feature(face_feature2)
+    res, score = face_engine.ASFFaceFeatureCompare(feature1, feature2)
+    unInitEngine(face_engine)
     return score
