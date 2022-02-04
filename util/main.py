@@ -20,8 +20,8 @@ if res != MOK:
     print("初始化接口失败！代码: {}".format(res))
 
 # RGB图像
-img1 = cv2.imread("asserts/1.jpg")
-img2 = cv2.imread("asserts/2.jpg")
+img1 = cv2.imread("../asserts/1.jpg")
+img2 = cv2.imread("../asserts/2.jpg")
 
 # 检测第一张图中的人脸
 res, detectedFaces1 = face_engine.ASFDetectFaces(img1)

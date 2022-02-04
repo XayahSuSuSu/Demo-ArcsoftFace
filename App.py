@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 
-import db
-from router import router
+from util import db
+from util.router import router
 
 app = Flask(__name__)
 

@@ -59,7 +59,7 @@ quit
 ```
 
 ### 三、配置APPID及SDKKEY
-打开项目根目录下Key.py，填写[虹软开发者中心](https://ai.arcsoft.com.cn/ucenter/resource/build/index.html#/application)获取到的APPID和SDKKEY
+打开[Key.py](./util/Key.py)，填写[虹软开发者中心](https://ai.arcsoft.com.cn/ucenter/resource/build/index.html#/application)获取到的APPID和SDKKEY
 
 ### 四、运行
 ```
