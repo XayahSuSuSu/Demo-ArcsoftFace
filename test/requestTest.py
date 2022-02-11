@@ -1,7 +1,7 @@
-import datetime
 import time
 
 import requests
+from numpy import mean
 
 
 def picture():
@@ -15,10 +15,13 @@ def face():
     files = {'file': ('picture.jpg', open('../asserts/2.jpg', 'rb'), 'image/jpeg')}
     r = requests.post("http://127.0.0.1:8000/api/v1/face", files=files)
     end = time.time()
-    print(r.text)
-    print("耗时：{}ms".format(
-        (datetime.datetime.fromtimestamp(start) - datetime.datetime.fromtimestamp(end)).microseconds / 1000))
+    # print(r.text)
+    # print("耗时：{}".format(end - start))
+    return end - start
 
 
 # picture()
-face()
+average = []
+for i in range(100):
+    average.append(face())
+print("调试次数：{}，平均耗时：{}".format(len(average), mean(average)))
