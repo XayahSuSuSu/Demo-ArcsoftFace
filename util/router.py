@@ -36,11 +36,12 @@ def face():
         if request.method == 'POST':
             picture = request.files['file']
             picture_bytes = picture.stream.read()
-            feature = getFaceFeature(picture_bytes)
+            features = getFaceFeature(picture_bytes)
             data = db.get_all()
             results = []
             for i in data:
-                results.append(getComparison(feature, i['face_feature']))
+                for j in features:
+                    results.append(getComparison(j, i['face_feature']))
             return {
                 'code': 1,
                 'msg': '操作成功！',

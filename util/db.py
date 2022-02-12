@@ -9,8 +9,8 @@ DB = 'App'  # 数据库名
 
 TABLE_DATA = 'data'
 FIELD_DATA = [
-    "picture blob,",
-    "face_feature blob",
+    "picture mediumblob,",
+    "face_feature mediumblob",
 ]
 
 

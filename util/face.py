@@ -40,22 +40,22 @@ def getFaceFeature(picture):
     np_picture = np.frombuffer(picture, np.uint8)
     img = cv2.imdecode(np_picture, cv2.IMREAD_ANYCOLOR)
 
-    face_feature = b''
-    res, detectedFaces1 = face_engine.ASFDetectFaces(img)
-    # print("人脸数据: {}".format(detectedFaces1))
+    face_feature_list = []
+    res, detectedFaces = face_engine.ASFDetectFaces(img)
+    # print("人脸数据: {}".format(detectedFaces))
     if res == MOK:
-        single_detected_face1 = ASF_SingleFaceInfo()
-        single_detected_face1.faceRect = detectedFaces1.faceRect[0]
-        single_detected_face1.faceOrient = detectedFaces1.faceOrient[0]
-        res, face_feature1 = face_engine.ASFFaceFeatureExtract(img, single_detected_face1)
-        face_feature = face_feature1.get_feature_bytes()
-        if res != MOK:
-            print("人脸特征提取失败！代码: {}".format(res))
+        for i in range(detectedFaces.faceNum):
+            single_detected_face = ASF_SingleFaceInfo()
+            single_detected_face.faceRect = detectedFaces.faceRect[i]
+            single_detected_face.faceOrient = detectedFaces.faceOrient[i]
+            res, face_feature = face_engine.ASFFaceFeatureExtract(img, single_detected_face)
+            face_feature_list.append(face_feature.get_feature_bytes())
+            if res != MOK:
+                print("人脸特征提取失败！代码: {}".format(res))
     else:
         print("人脸检测失败！代码: {}".format(res))
-
     unInitEngine(face_engine)
-    return face_feature
+    return face_feature_list
 
 
 def getComparison(face_feature1, face_feature2):

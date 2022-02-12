@@ -15,13 +15,13 @@ def face():
     files = {'file': ('picture.jpg', open('../asserts/2.jpg', 'rb'), 'image/jpeg')}
     r = requests.post("http://127.0.0.1:8000/api/v1/face", files=files)
     end = time.time()
-    # print(r.text)
+    print(r.text)
     # print("耗时：{}".format(end - start))
     return end - start
 
 
 # picture()
 average = []
-for i in range(100):
+for i in range(1):
     average.append(face())
 print("调试次数：{}，平均耗时：{}".format(len(average), mean(average)))
