@@ -16,8 +16,9 @@ def pictures():
     try:
         if request.method == 'POST':
             picture = request.files['file']
+            name = request.form.to_dict()['name']
             picture_bytes = picture.stream.read()
-            db.insert(picture_bytes, getFaceFeature(picture_bytes))
+            db.insert(name, picture_bytes, getFaceFeature(picture_bytes))
             return {
                 'code': 1,
                 'msg': '上传成功！',
@@ -40,8 +41,15 @@ def face():
             data = db.get_all()
             results = []
             for i in data:
+                record = {'name': i['name'], 'data': []}
                 for j in features:
-                    results.append(getComparison(j, i['face_feature']))
+                    face_info = {
+                        'face_rect': j['face_rect'],
+                        'face_orient': j['face_orient'],
+                        'face_score': getComparison(j['face_feature'], i['face_feature'])
+                    }
+                    record['data'].append(face_info)
+                results.append(record)
             return {
                 'code': 1,
                 'msg': '操作成功！',

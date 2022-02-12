@@ -49,7 +49,12 @@ def getFaceFeature(picture):
             single_detected_face.faceRect = detectedFaces.faceRect[i]
             single_detected_face.faceOrient = detectedFaces.faceOrient[i]
             res, face_feature = face_engine.ASFFaceFeatureExtract(img, single_detected_face)
-            face_feature_list.append(face_feature.get_feature_bytes())
+            face_info = {
+                'face_rect': str(single_detected_face.faceRect),
+                'face_orient': single_detected_face.faceOrient,
+                'face_feature': face_feature.get_feature_bytes()
+            }
+            face_feature_list.append(face_info)
             if res != MOK:
                 print("人脸特征提取失败！代码: {}".format(res))
     else:

@@ -9,6 +9,7 @@ DB = 'App'  # 数据库名
 
 TABLE_DATA = 'data'
 FIELD_DATA = [
+    "name text,",
     "picture mediumblob,",
     "face_feature mediumblob",
 ]
@@ -47,13 +48,13 @@ def init():
     db.close()
 
 
-def insert(picture, face_feature):
+def insert(name, picture, face_feature):
     """插入一条记录"""
     db = pymysql.connect(host=HOST, user=USER, password=PASSWORD, charset='utf8')
     cursor = db.cursor()
     cursor.execute("use {};".format(DB))
-    insert_data = "INSERT INTO data VALUES (0,%s,%s,%s,%s)"
-    args = (timestamp(), timestamp(), picture, face_feature)
+    insert_data = "INSERT INTO data VALUES (0,%s,%s,%s,%s,%s)"
+    args = (timestamp(), timestamp(), name, picture, face_feature)
     cursor.execute(insert_data, args)
     db.commit()
     db.close()
