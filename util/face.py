@@ -16,6 +16,7 @@ def initEngine():
     """初始化引擎并返回"""
 
     # 获取人脸识别引擎
+    global face_engine
     face_engine = ArcFace()
 
     # 人脸检测 | 人脸特征
@@ -25,18 +26,14 @@ def initEngine():
     res = face_engine.ASFInitEngine(ASF_DETECT_MODE_IMAGE, ASF_OP_0_ONLY, 30, 10, mask)
     if res != MOK:
         print("初始化接口失败！代码: {}".format(res))
-    return face_engine
 
 
-def unInitEngine(face_engine):
+def unInitEngine():
     """反初始化"""
     face_engine.ASFUninitEngine()
 
 
 def getFaceFeature(picture):
-    activate()
-    face_engine = initEngine()
-
     np_picture = np.frombuffer(picture, np.uint8)
     img = cv2.imdecode(np_picture, cv2.IMREAD_ANYCOLOR)
 
@@ -59,18 +56,14 @@ def getFaceFeature(picture):
                 print("人脸特征提取失败！代码: {}".format(res))
     else:
         print("人脸检测失败！代码: {}".format(res))
-    unInitEngine(face_engine)
     return face_feature_list
 
 
 def getComparison(face_feature1, face_feature2):
     """返回相似度"""
-    activate()
-    face_engine = initEngine()
     feature1 = ASF_FaceFeature()
     feature1.set_feature(face_feature1)
     feature2 = ASF_FaceFeature()
     feature2.set_feature(face_feature2)
     res, score = face_engine.ASFFaceFeatureCompare(feature1, feature2)
-    unInitEngine(face_engine)
     return score

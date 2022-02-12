@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 
 from util import db
+from util.face import activate, initEngine
 from util.router import router
 
 app = Flask(__name__)
@@ -16,6 +17,10 @@ app.register_blueprint(router, url_prefix="/")
 
 # 初始化MySQL数据库
 db.init()
+
+# 初始化虹软引擎
+activate()
+initEngine()
 
 if __name__ == '__main__':
     app.run()

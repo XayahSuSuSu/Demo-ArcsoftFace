@@ -21,17 +21,16 @@ def timestamp():
 
 def get_all():
     """返回表中所有数据"""
-    db = pymysql.connect(host=HOST, user=USER, password=PASSWORD, charset='utf8')
     cursor = db.cursor(pymysql.cursors.DictCursor)
     cursor.execute("use {};".format(DB))
     cursor.execute("SELECT * from {}".format(TABLE_DATA))
     data = cursor.fetchall()
-    db.close()
     return data
 
 
 def init():
     """创建数据库和数据表"""
+    global db
     db = pymysql.connect(host=HOST, user=USER, password=PASSWORD, charset='utf8')
     cursor = db.cursor()
     # 创建数据库
@@ -45,16 +44,13 @@ def init():
         + "created_at timestamp,updated_at timestamp,"
         + field_data
         + ");")
-    db.close()
 
 
 def insert(name, picture, face_feature):
     """插入一条记录"""
-    db = pymysql.connect(host=HOST, user=USER, password=PASSWORD, charset='utf8')
     cursor = db.cursor()
     cursor.execute("use {};".format(DB))
     insert_data = "INSERT INTO data VALUES (0,%s,%s,%s,%s,%s)"
     args = (timestamp(), timestamp(), name, picture, face_feature)
     cursor.execute(insert_data, args)
     db.commit()
-    db.close()
