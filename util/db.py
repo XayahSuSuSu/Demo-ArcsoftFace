@@ -21,6 +21,7 @@ def timestamp():
 
 def get_all():
     """返回表中所有数据"""
+    db.ping()
     cursor = db.cursor(pymysql.cursors.DictCursor)
     cursor.execute("use {};".format(DB))
     cursor.execute("SELECT * from {}".format(TABLE_DATA))
@@ -32,6 +33,7 @@ def init():
     """创建数据库和数据表"""
     global db
     db = pymysql.connect(host=HOST, user=USER, password=PASSWORD, charset='utf8')
+    db.ping()
     cursor = db.cursor()
     # 创建数据库
     cursor.execute("CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARSET utf8 COLLATE utf8_general_ci;".format(DB))
@@ -48,6 +50,7 @@ def init():
 
 def insert(name, picture, face_feature):
     """插入一条记录"""
+    db.ping()
     cursor = db.cursor()
     cursor.execute("use {};".format(DB))
     insert_data = "INSERT INTO data VALUES (0,%s,%s,%s,%s,%s)"
