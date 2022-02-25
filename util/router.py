@@ -18,7 +18,7 @@ def pictures():
             picture = request.files['file']
             name = request.form.to_dict()['name']
             picture_bytes = picture.stream.read()
-            db.insert(name, picture_bytes, getFaceFeature(picture_bytes))
+            db.insert(name, picture_bytes, getFaceFeature(picture_bytes)[0]['face_feature'])
             return {
                 'code': 1,
                 'msg': '上传成功！',

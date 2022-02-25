@@ -23,8 +23,8 @@ def face():
     return end - start
 
 
-# picture()
-average = []
-for i in range(1):
-    average.append(face())
-print("调试次数：{}，平均耗时：{}".format(len(average), mean(average)))
+picture()
+# average = []
+# for i in range(1):
+#     average.append(face())
+# print("调试次数：{}，平均耗时：{}".format(len(average), mean(average)))
