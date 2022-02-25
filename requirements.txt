@@ -1,9 +1,0 @@
-flask~=2.0.2
-pymysql~=1.0.2
-gunicorn
-gevent
-cryptography
-flask-cors
-opencv-python~=4.5.5.62
-requests~=2.22.0
-numpy~=1.22.1
