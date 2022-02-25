@@ -1,7 +1,7 @@
 from ctypes import *
 from typing import List
 
-libc = CDLL("libc.so.6")
+from pyarcsoftface import lib_func
 
 
 # 激活文件信息
@@ -25,7 +25,8 @@ class ASF_ActiveFileInfo(Structure):
                 ]
 
     def __str__(self):
-        return "ASF_ActiveFileInfo(startTime={},endTime={},platform={},sdkType={},appId={},sdkKey={},sdkVersion={},fileVersion={})" \
+        return "ASF_ActiveFileInfo(startTime={},endTime={},platform={},sdkType={},appId={},sdkKey={},sdkVersion={}," \
+               "fileVersion={})" \
             .format(self.startTime, self.endTime, self.platform, self.sdkType, self.appId, self.sdkKey, self.sdkVersion,
                     self.fileVersion)
 
@@ -102,8 +103,8 @@ class ASF_FaceFeature(Structure):
         :return: None
         """
         self.featureSize = featureSize
-        self.feature = libc.malloc(featureSize)
-        libc.memcpy(self.feature, feature, featureSize)
+        self.feature = lib_func.malloc(featureSize)
+        lib_func.memcpy(self.feature, feature, featureSize)
 
     def get_feature_bytes(self):
         return string_at(self.feature, self.featureSize)
