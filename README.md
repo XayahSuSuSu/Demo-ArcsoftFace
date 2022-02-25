@@ -63,7 +63,7 @@ quit
 
 ### 四、运行
 ```
-gunicorn -k gevent App:app
+Python3 Tornado.py
 ```
 
 ## 许可证
