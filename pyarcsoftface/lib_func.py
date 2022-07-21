@@ -1,12 +1,4 @@
-import os
-
 from pyarcsoftface.struct_info import *
-
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-libarcsoft_face = CDLL(r'{}/lib/libarcsoft_face.so'.format(root_dir))
-libarcsoft_face_engine = CDLL(r'{}/lib/libarcsoft_face_engine.so'.format(root_dir))
-libc = CDLL("libc.so.6")
 
 c_ubyte_p = POINTER(c_ubyte)
 
@@ -34,7 +26,7 @@ ASFDetectFaces.argtypes = (c_void_p, c_int32, c_int32, c_int32, POINTER(c_ubyte)
 ASFFaceFeatureExtract = libarcsoft_face_engine.ASFFaceFeatureExtract
 ASFFaceFeatureExtract.restype = c_int32
 ASFFaceFeatureExtract.argtypes = (
-c_void_p, c_int32, c_int32, c_int32, POINTER(c_ubyte), POINTER(ASF_SingleFaceInfo), POINTER(ASF_FaceFeature))
+    c_void_p, c_int32, c_int32, c_int32, POINTER(c_ubyte), POINTER(ASF_SingleFaceInfo), POINTER(ASF_FaceFeature))
 
 # 特征比对
 ASFFaceFeatureCompare = libarcsoft_face_engine.ASFFaceFeatureCompare

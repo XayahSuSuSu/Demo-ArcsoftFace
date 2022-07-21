@@ -1,7 +1,21 @@
+import os
+import sys
 from ctypes import *
 from typing import List
 
-libc = CDLL("libc.so.6")
+platform = sys.platform
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if platform == "win32":
+    libarcsoft_face = CDLL(r'{}/lib/libarcsoft_face.dll'.format(root_dir))
+    libarcsoft_face_engine = CDLL(r'{}/lib/libarcsoft_face_engine.dll'.format(root_dir))
+    libc = cdll.msvcrt
+elif platform == "linux":
+    libarcsoft_face = CDLL(r'{}/lib/libarcsoft_face.so'.format(root_dir))
+    libarcsoft_face_engine = CDLL(r'{}/lib/libarcsoft_face_engine.so'.format(root_dir))
+    libc = CDLL("libc.so.6")
+else:
+    raise Exception("Unsupported operating platform:{}".format(platform))
 
 
 # 激活文件信息
